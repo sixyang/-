@@ -1,0 +1,83 @@
+<div>
+    <div class="header-fix">
+        <header class="outer-container">
+            <div class="main-container clearfix">
+                <a class="logo-con left" href="/">
+                    <img class="logo-icon" src="/statics/picture/logo-c30a1a3941.png">
+                    <img class="logo-txt" src="/statics/picture/logo_txt-06bb1545d4.png">
+                </a>
+
+                <nav class="left">
+                    <div class="nav-ul clearfix">
+                        <a class="nav-li left active" data-url="/" href="/">
+                            <span>首页</span>
+                        </a>
+                        <a class="nav-li left zone-area-btn" href="javascript:;">
+                            <span>
+                                <span>专区</span>
+                            </span>
+                            <span class="trangle-icon"></span>
+                        </a>
+                        <a class="nav-li left" data-url="/all/man" onclick="lack();">
+                            <span>人类发布</span>
+                        </a>
+                        <a class="nav-li left" data-url="/zone/video" onclick="lack();">
+                            <span>视频</span>
+                        </a>
+
+                    </div>
+
+                </nav>
+                {% if request.user.is_authenticated %}
+
+                <span class="right avatar-con">
+                    <img class="avatar-icon"
+                    src="{{ cur_user.myuser.pic }}"
+                    onerror="this.src='/images/image48-9d05fa83eb.png';this.onerror=null;" data-jump="/my_zone"/>
+                    <span class="hover-down">
+                        {#TODO: 此处应该有个人中心！#}
+                        <a href="/my_zone">个人中心</a>
+{#                        <a href="/attention/follower/ctu_56509679949">我的抽友</a>#}
+{#                        <a href="/wallet">钱包</a>#}
+                        <a href="/my_zone/collect" target="_blank">收藏</a>
+{#                        <a href="/profile">设置</a>#}
+                        <a href="/logout">退出</a>
+                    </span>
+                </span>
+
+
+                {% else %}
+                    <a class="btn1 right login-btn" id="login_btn">登录</a>
+
+                {% endif %}
+                <button class="btn right publish-btn" id="upload">
+                    <img class="publish-icon" src="/statics/picture/publish-8b6a56e521.png">发布
+                </button>
+                <div id="release"></div>
+                <div class="search right">
+                    <input class="search-input" placeholder="请输入和标题相关内容">
+                    <span class="search-icon"></span>
+                </div>
+
+
+            </div>
+        </header>
+        <div class="outer-container zone-container">
+            <div class="main-container zone-area clearfix"><a class="zone-item left" data-url="/zone/news"
+                    href="/zone/news"><img src="/statics/picture/news-58b6bea1e3.png" alt="" class="zone-icon"> <span
+                        class="zone-text">42区</span> </a><a class="zone-item left ml75" data-url="/zone/scoff"
+                    href="/zone/scoff"><img src="/statics/picture/scoff-9066191b8b.png" alt="" class="zone-icon">
+                    <span class="zone-text">段子</span> </a><a class="zone-item left ml75" data-url="/zone/pic"
+                    href="/zone/pic"><img src="/statics/picture/pic-6a4b7c1218.png" alt="" class="zone-icon"> <span
+                        class="zone-text">图片</span> </a><a class="zone-item left ml75" data-url="/zone/tec"
+                    href="/zone/tec"><img src="/statics/picture/tec-8fb1f3b88f.png" alt="" class="zone-icon"> <span
+                        class="zone-text">挨踢1024</span> </a><a class="zone-item left ml75" data-url="/zone/ask"
+                    href="/zone/ask"><img src="/statics/picture/ask-3aa2f9e0ea.png" alt="" class="zone-icon"> <span
+                        class="zone-text">你问我答</span></a></div>
+        </div>
+{#        这里哪儿来的密码输入框？#}
+        <input type="password" style="display: none;"> <input type="text" autocomplete="off"
+            style="display: none;"> <input class="form-control" type="password" name="tradePassword" id="txPassword"
+            autocomplete="new-password" style="display: none;">
+    </div>
+</div>

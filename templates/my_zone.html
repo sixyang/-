@@ -1,0 +1,141 @@
+<!doctype html>
+<html class="no-`js" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% include 'assembly/head.html' %}
+
+<style>
+    header .search .search-input {
+        margin-top: 10px;
+    }
+    body{
+         background-color: rgba(211,211,211, 0.2);
+    }
+</style>
+<body>
+{% include 'assembly/header.html' %}
+<div class="main-container clearfix">
+    <div class="profile-header-container" style="background-image:url(/statics/images/covermap-062e647fbc.png);">
+        <div class="profile-header-content">
+            <div class="user-nick fold-line"><p class="user-name-text">{{ cur_user.first_name }}</p><span>
+                <img src="/statics/images/fold_line4-2be77c0e9f.png"></span></div>
+            <div class="user-sex fold-line"><span><img src="/statics/images/fold_line5-c09b3e02c6.png"></span>
+                <p class="user-sex-text">{{ cur_user.myuser.gender }}</p></div>
+            <div class="user-age fold-line"><p class="user-age-text">{{ cur_user.date_joined }}加入</p><span>
+                <img src="/statics/images/fold_line3-bc8570d126.png"></span></div>
+            <div class="user-area fold-line" style="display: block;"><span>
+                <img src="/statics/images/fold_line1-bdbae0d1c0.png"></span>
+                <p class="user-area-text">{{ cur_user.myuser.location }}</p></div>
+            <div class="user-sign fold-line"><span><img src="/statics/images/fold_line2-d6d843cbb9.png"></span>
+                <p class="user-sign-area"><span class="user-sign-text">蓄力中======》1%</span> <span class="more-sign">蓄力中======》1%</span>
+                </p></div>
+        </div>
+        <div class="user-avatar"><a class="avatar-con has-edit" href="/profile/edit" target="_blank"><img
+                src="{{ cur_user.myuser.pic }}"
+                alt=""> <span class="edit-mark">编辑资料</span></a></div>
+    </div>
+</div>
+
+<div class="outer-container">
+    <div class="main-container clearfix tabs">
+        <div class="tabs-tab active"><a href="javascript:;">我的抽屉</a></div>
+{#        <div class="tabs-tab"><a href="/attention/follower/ctu_56509679949">我的抽友</a></div>#}
+{#        <div class="tabs-tab"><a href="/wallet">钱包</a></div>#}
+    </div>
+</div>
+<div class="outer-container">
+            <div class="main-container main-fix clearfix">
+                <div class="main-wrap">
+                    <div class="main">
+                        <main>
+                            <div class="outer-container">
+                                <div class="main-container tiny-container home ct-links clearfix">
+
+                                    <div class="main-wrap">
+                                        <div class="content personal" style="width: 840px">
+
+                                            {#以下就是帖子的具体内容#}
+                                            <div>
+                                                <div class="link-con">
+                                            {#正文内容#}
+
+                                                    {% ifnotequal request.path '/my_zone' %}
+                                                        {% include "assembly/article.html" %}
+                                                    {% endifnotequal %}
+
+                                            {#正文结束#}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="sub personal personal-nav-fixed">
+                                            <div class="nav-ul">
+                                                {% ifequal cur_path '/my_zone/collect' %}
+                                                    <a class="nav-li active" href="/my_zone/my_like">
+                                                        <span class="personal-icon private-icon"></span>
+                                                        <span class="personal-type">私藏</span>
+                                                        <span class="nav-li-text save-count">0</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <a class="nav-li" href="/my_zone/my_like">
+                                                        <span class="personal-icon private-icon"></span>
+                                                        <span class="personal-type">私藏</span>
+                                                        <span class="nav-li-text save-count">0</span>
+                                                    </a>
+                                                {% endifequal %}
+                                                {% ifequal cur_path '/my_zone/my_release' %}
+                                                    <a class="nav-li active" href="/my_zone/my_release">
+                                                        <span class="personal-icon publish-icon"></span>
+                                                        <span class="personal-type">发布</span>
+                                                        <span class="nav-li-text publish-link-count">{{ articles.count }}</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <a class="nav-li" href="/my_zone/my_release">
+                                                        <span class="personal-icon publish-icon"></span>
+                                                        <span class="personal-type">发布</span>
+                                                        <span class="nav-li-text publish-link-count">{{ articles.count }}</span>
+                                                    </a>
+                                                {% endifequal %}
+                                                {% ifequal cur_path '/my_zone/my_like' %}
+                                                    <a class="nav-li active" href="/my_zone/my_like">
+                                                        <span class="personal-icon recommend-icon"></span>
+                                                        <span class="personal-type">喜欢</span>
+                                                        <span class="nav-li-text voted-link-count">{{ cur_user_like.count }}</span>
+                                                    </a>
+                                                    {% else %}
+                                                    <a class="nav-li" href="/my_zone/my_like">
+                                                        <span class="personal-icon recommend-icon"></span>
+                                                        <span class="personal-type">喜欢</span>
+                                                        <span class="nav-li-text voted-link-count">{{ cur_user_like.count }}</span>
+                                                    </a>
+                                                {% endifequal %}
+                                                {% ifequal cur_path '/my_zone/my_comment' %}
+                                                    <a class="nav-li active" href="/my_zone/my_comment">
+                                                        <span class="personal-icon comment-icon"></span>
+                                                        <span class="personal-type">评论</span>
+                                                        <span class="nav-li-text publish-comment-count">1</span>
+                                                    </a>
+                                                 {% else %}
+                                                    <a class="nav-li" href="/my_zone/my_comment">
+                                                        <span class="personal-icon comment-icon"></span>
+                                                        <span class="personal-type">评论</span>
+                                                        <span class="nav-li-text publish-comment-count">1</span>
+                                                    </a>
+                                                {% endifequal %}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% include 'assembly/scripts.html' %}
+
+</body>
+
+</html>

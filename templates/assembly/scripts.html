@@ -1,0 +1,103 @@
+<script type="text/javascript">
+            // window.autoBid = "";
+            window.jid = "";
+            window.loginedUser = "";
+            window.followCount = "";
+            window.action = "";
+            window.phone = "";
+            window.commentLimit = "";
+        </script>
+        <script src="/statics/js/base-e25c36c26c.js"></script>
+        <script src="/statics/js/core-804617a63a.js"></script>
+        <script src="/statics/js/load.min.js"></script>
+        <script type="text/javascript">
+            let messageArr = [];
+            let messageCount = 0;
+            let requestUrl = "\/";
+            let serverUrl = "https:\/\/io.chouti.com";
+            let socket = io.connect(serverUrl);
+            if (window.jid) {
+                socket.emit('clientId', window.jid); //登陆状态下发送jid
+            }
+            //收到进入热榜消息
+            if (requestUrl == '/' || requestUrl == '/all/hot') {
+                socket.on('hot_updated', function (msg) {
+                    // console.log(msg);
+                    const jsonObj = JSON.parse(msg);
+                    messageCount = messageCount + 1;
+                    messageArr.push(jsonObj.linkId);
+                    if (messageCount > 0) {
+                        $('.msgAlert-place').show();
+                    } else {
+                        $('.msgAlert-place').hide();
+                    }
+                    $('.msg-alert .num').text(messageCount);
+                });
+            }
+
+            //收到顶部通知
+            if (requestUrl != '/download') {
+                socket.on('has_notification', function (msg) {
+                    window.CT.fetchNotify();
+                });
+            }
+
+
+            // 关闭黄条
+            $('body').on('click', '.close-area', e => {
+                e.stopPropagation();
+                e.preventDefault();
+                $('.msgAlert-place').hide();
+            });
+
+            // 查看新入热榜的新闻
+            $('body').on('click', '#refreshLink', e => {
+                const linkIds = messageArr.join(',');
+                if (messageCount < 25) {
+                    $.ajax({
+                        url: '/get/links/ajax',
+                        type: "GET",
+                        data: {
+                            linkIds: linkIds
+                        },
+                        success: function (res) {
+                            window.scrollTo(0, 0);
+                            messageArr = [];
+                            messageCount = 0;
+                            $('.msgAlert-place').hide();
+                            const linkList = res.linkList.length ? window.CT.preDealLinks(res
+                                .linkList, 'index') : [];
+                            if (linkList.length && res.refresh == false) {
+                                const template = Handlebars.compile(window.CT.LinkTmpl);
+                                const context = {
+                                    links: linkList,
+                                    isHot: true
+                                };
+                                $('.link-con').prepend(template(context));
+
+                                window.CT.generateQrcode();
+                            } else {
+                                window.location.href = window.location.href;
+                            }
+
+                        },
+                        error: function () {}
+                    });
+                } else {
+                    window.location.href = window.location.href;
+                }
+
+            });
+        </script>
+        <script type="text/javascript">
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?03b2668f8e8699e91d479d62bc7630f1";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    </div>
+    <script src="/statics/js/linksrouter-c81e26a3dd.js"></script>
+    <script src="/statics/js/myjs.js"></script>

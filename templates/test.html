@@ -1,0 +1,37 @@
+<!doctype html>
+<html class="no-`js" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+{% include 'assembly/head.html' %}
+
+<body>
+
+    {% include 'assembly/header.html' %}
+    <main>
+        <div class="outer-container">
+            <div class="main-container main-fix clearfix">
+                <div class="main-wrap">
+                    <div class="main">
+
+                        {#以下就是帖子的具体内容#}
+                        <div>
+                            <div class="link-con">
+                        {#正文内容#}
+
+                                {% include "assembly/article.html" %}
+
+                        {#正文结束#}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {#以下就是右边侧栏的相关内容#}
+                {% include 'assembly/right_side.html' %}
+
+            </div>
+        </div>
+    </main>
+{% include 'assembly/scripts.html' %}
+</body>
+</html>

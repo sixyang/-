@@ -1,0 +1,133 @@
+{% load get_like_num %}
+{% for info in articles %}
+<!-- 第一个article开始 -->
+<div class="link-item clearfix link-item-{{ info.news_id }}" id='context' data-id="{{ info.news_id }}"
+    data-has-saved="false" data-has-uped="false" data-time-into-pool="1565088600032000"
+    data-score="9582.99351520362" data-action-time="1565086432935000">
+            {#一堆不知道是什么东西#}
+    <div class="link-area clearfix">
+
+        <!-- 图片链接 -->
+        {% if info.pic_url %}
+            <a class="common-matching-con left" href="javascript:void(0)"
+            data-pic="{{ info.pic_url }}"
+            data-matching="{{ info.url }}" target="_blank">
+            <img class="matching image-scale"
+                src="{{ info.pic_url }}"
+                />
+        </a>
+
+        {% endif %}
+
+        <!-- 正文部分 -->
+    {% if info.pic_url %}
+        <div class="link-info-con left">
+            <div class="link-detail">
+                <div class="link-mark clearfix"> </div>
+                    {% if info.url %}
+
+                        <a class="link-title link-statistics" data-id="{{ info.news_id }}" href="{{ info.url }}" target="_blank">{{ info.summary }}</a>
+                    {% else %}
+                        <a class="link-title link-statistics" data-id="{{ info.news_id }}" style="cursor: text;">{{ info.summary }}</a>
+                    {% endif %}
+                        <div class="link-from">{{ info.url }}</div>
+
+    {% else %}
+        <div class="link-info-con left" style="width: 810px;">
+            <div class="link-detail">
+                <div class="link-mark clearfix"> </div>
+                        <a class="link-title link-statistics" data-id="{{ info.news_id }}"
+                        target="_blank">{{ info.summary }}
+                        </a>
+
+    {% endif %}
+                <!-- 分界线 -->
+                <div class="link-des"></div>
+            </div>
+
+            <!-- 作者, 点赞, 评论相关 -->
+            <div class="operate-author-con clearfix">
+
+                <!-- 左侧上传者 -->
+                <div class="author-con left clearfix">
+                    <span class="left author-avatar-name clearfix" data-id="{{ info.news_id }}" jid="ruishouyouzai"
+                                    {#TODO:跳转到用户主页， 修改用户data-jid#}>
+                        <img class="left author-avatar" src="{{ info.user.myuser.pic }}"
+                            onerror="this.src='/statics/images/image48-9d05fa83eb.png';this.onerror=null;"/>
+                        <span class="left author-name">{{ info.user.first_name }}</span>
+                    </span>
+                    <span class="left time-enter timeago">
+                        <span data-time="1565088600032000" class="time-update">{{ info.curtime|date:"Y-m-d H:i:s" }} </span>入榜
+                    </span>
+                    <span class="left separate-line"></span>
+                        <a class="left category-icon {{ info.news_type.linked_image }}" href="/zone/news" target="_blank">
+                            <span class="category-icon-name">
+                                {% ifnotequal info.news_type.news_type_name '/zone/scoff' %}
+                                    {{ info.news_type.news_type }}
+                                {% endifnotequal %}
+                            </span>
+                        </a>
+                </div>
+
+                <!-- 右侧信息 -->
+            <div class="operate-con right clearfix">
+
+                    <a class="operate-item recommend left clearfix normal" href="javascript:;" data-id="{{ info.news_id }}" onclick="like(this)";>
+                    <span class="recommend-icon left">
+{#                    {% info in cur_user_like %}#}
+                        {% if info in cur_user_like %}
+                            <span class="recommend-icon-img" id="like" style="background-image: url('/statics/images/recommend_active-4d2339fdaa.png')"></span>
+                            <span class="recommend-icon-img-animate"></span>
+                        {% else %}
+                            <span class="recommend-icon-img" id="like"></span>
+                            <span class="recommend-icon-img-animate"></span>
+                        {% endif %}
+
+                    </span>
+                    <span class="recommend-num left" id="like_num">{% get_num info %}</span>
+                    </a>
+
+                                    {#评论内容和数据库更新#}
+                    <a class="operate-item comment link-comment left clearfix"
+                        data-id="{{ info.news_id }}" data-no-comments="false"
+                        data-comment-have-comments="false" data-link-expire="false"
+                        data-submit-jid="ruishouyouzai" href="javascript:;">
+                        <span class="comment-icon left"></span>
+                        <span class="comment-num left">2</span>
+                    </a>
+
+                    <a class="operate-item save left normal" onclick="x();">
+                        <span class="save-icon">
+                            <span class="save-icon-img"></span>
+                            <span class="save-icon-img-animate"></span>
+                        </span>
+                    </a>
+                    <!-- 分享 -->
+                    <a class="operate-item share left"
+                        data-title="{{ info.summary }}"
+                        data-pic="{{ info.pic_url }}"
+                        data-id="{{ info.news_id }}" data-url="/share/link?link_id=27350531">
+                        <span class="share-icon"></span>
+                        <span class="share-hover-con">
+                            <span class="share-hover-con-bg">
+                                <span class="share-inner-icon weixin-icon">
+                                    <span class="qrcode-con">
+                                        <img class="right-angle-icon" src="/statics/picture/right-angle-dbcda87c97.png">
+                                            <span class="qrcode-img"></span>
+                                    </span>
+                                </span>
+                                <span class="share-inner-icon weibo-icon"></span>
+                                <span class="share-inner-icon dou-icon"></span>
+                                <span class="share-inner-icon qq-icon"></span>
+                                <span class="share-inner-icon link-icon"></span>
+                            </span>
+                        </span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
